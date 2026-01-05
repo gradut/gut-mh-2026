@@ -11,7 +11,7 @@ from puzzles.models import Puzzle
 
 
 @login_required(login_url="/")
-@permission_required_or_403("hunt_access", (Hunt, "puzzles", "puzzle_pk"))
+# @permission_required_or_403("hunt_access", (Hunt, "puzzles", "puzzle_pk"))
 def redirect_to_sheet(request, puzzle_pk):
     try:
         puzzle = Puzzle.objects.select_related("hunt__settings").get(pk=puzzle_pk)

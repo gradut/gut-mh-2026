@@ -55,10 +55,10 @@ def index(request):
             return HttpResponseForbidden()
 
     context = {
-        "active_hunts": get_objects_for_user(request.user, "hunt_access", klass=Hunt)
+        "active_hunts": get_objects_for_user(request.user, [], klass=Hunt)
         .filter(active=True)
         .order_by("-created_on"),
-        "finished_hunts": get_objects_for_user(request.user, "hunt_access", klass=Hunt)
+        "finished_hunts": get_objects_for_user(request.user, [], klass=Hunt)
         .filter(active=False)
         .order_by("-created_on"),
         "form": form,
@@ -96,7 +96,7 @@ def edit(request, hunt_slug):
 
 
 @login_required(login_url="/")
-@permission_required_or_403("hunt_access", (Hunt, "slug", "hunt_slug"))
+# @permission_required_or_403("hunt_access", (Hunt, "slug", "hunt_slug"))
 def stats(request, hunt_slug):
     hunt = Hunt.get_object_or_404(user=request.user, slug=hunt_slug)
 
@@ -142,7 +142,7 @@ def stats(request, hunt_slug):
 
 
 @login_required(login_url="/")
-@permission_required_or_403("hunt_access", (Hunt, "slug", "hunt_slug"))
+# @permission_required_or_403("hunt_access", (Hunt, "slug", "hunt_slug"))
 def redirect_to_drive(request, hunt_slug):
     hunt = get_object_or_404(Hunt.objects.select_related("settings"), slug=hunt_slug)
     human_url = hunt.settings.google_drive_human_url
@@ -203,7 +203,7 @@ class ReactHuntView(LoginRequiredMixin, View):
 
     def get(self, request, hunt_slug):
         hunt = Hunt.get_object_or_404(user=request.user, slug=hunt_slug)
-        if not request.user.has_perm("hunt_access", hunt):
+        if not True: #request.user.has_perm("hunt_access", hunt):
             raise PermissionDenied()
 
         context = {

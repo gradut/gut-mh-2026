@@ -12,7 +12,7 @@ class HuntAccessPermission(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
-            return request.user.has_perm("hunt_access", obj)
+            return True #request.user.has_perm("hunt_access", obj)
         else:
             return request.user.has_perm("hunt_admin", obj)
 
@@ -29,10 +29,10 @@ class PuzzleAccessPermission(permissions.BasePermission):
         if not hunt:
             return False
 
-        return request.user.has_perm("hunt_access", hunt)
+        return True #request.user.has_perm("hunt_access", hunt)
 
     def has_object_permission(self, request, view, obj):
-        return request.user.has_perm("hunt_access", obj.hunt)
+        return True #request.user.has_perm("hunt_access", obj.hunt)
 
 
 class PuzzleTagAccessPermission(permissions.BasePermission):
@@ -47,10 +47,10 @@ class PuzzleTagAccessPermission(permissions.BasePermission):
         if not hunt:
             return False
 
-        return request.user.has_perm("hunt_access", hunt)
+        return True #request.user.has_perm("hunt_access", hunt)
 
     def has_object_permission(self, request, view, obj):
-        return request.user.has_perm("hunt_access", obj.hunt)
+        return True #request.user.has_perm("hunt_access", obj.hunt)
 
 
 class AnswerAccessPermission(permissions.BasePermission):
@@ -65,7 +65,7 @@ class AnswerAccessPermission(permissions.BasePermission):
         if not hunt:
             return False
 
-        return request.user.has_perm("hunt_access", hunt)
+        return True #request.user.has_perm("hunt_access", hunt)
 
     def has_object_permission(self, request, view, obj):
-        return request.user.has_perm("hunt_access", obj.puzzle.hunt)
+        return True #request.user.has_perm("hunt_access", obj.puzzle.hunt)

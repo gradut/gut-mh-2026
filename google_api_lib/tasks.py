@@ -109,12 +109,13 @@ def create_google_sheets(self, puzzle_id) -> None:
     with transaction.atomic():
         puzzle = Puzzle.objects.select_related("hunt__settings").get(pk=puzzle_id)
         template_file_id = (
+            settings.GOOGLE_SHEETS_TEMPLATE_FILE_ID or 
             puzzle.hunt.settings.google_sheets_template_file_id
-            or settings.GOOGLE_SHEETS_TEMPLATE_FILE_ID
         )
         destination_folder_id = (
-            puzzle.hunt.settings.google_drive_folder_id
-            or settings.GOOGLE_DRIVE_HUNT_FOLDER_ID
+            settings.GOOGLE_DRIVE_HUNT_FOLDER_ID
+            or puzzle.hunt.settings.google_drive_folder_id
+            
         )
 
         new_file = None

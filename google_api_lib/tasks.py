@@ -92,9 +92,7 @@ def transfer_ownership(self, file, template_file_id) -> None:
     self.drive_service().permissions().update(
         fileId=file["id"],
         permissionId=permission["id"],
-        # body={"role": "writer", "pendingOwner": "true"},
-        body = {"role": "owner"},
-        transferOwnership=True
+        body={"role": "writer", "pendingOwner": "true"},
     ).execute()
 
 

@@ -92,7 +92,9 @@ def transfer_ownership(self, file, template_file_id) -> None:
     self.drive_service().permissions().update(
         fileId=file["id"],
         permissionId=permission["id"],
-        body={"role": "writer", "pendingOwner": "true"},
+        # body={"role": "writer", "pendingOwner": "true"},
+        body = {"role": "owner"},
+        transferOwnership=True
     ).execute()
 
 
@@ -115,7 +117,6 @@ def create_google_sheets(self, puzzle_id) -> None:
         destination_folder_id = (
             settings.GOOGLE_DRIVE_HUNT_FOLDER_ID
             or puzzle.hunt.settings.google_drive_folder_id
-            
         )
 
         new_file = None
